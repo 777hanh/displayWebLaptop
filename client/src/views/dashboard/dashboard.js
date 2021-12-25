@@ -35,7 +35,7 @@ const DashBoard = () => {
     //get product from store of redux
     const products = useSelector(state => state.productList.products)
     // const products = []
-    console.log(products)
+    // console.log(products)
 
 
     let body = (
