@@ -4,6 +4,7 @@ import logoutIcon from './../../assets/logout.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { LOGOUT_USER } from './../../redux/action'
 import { useNavigate } from 'react-router-dom'
+// import axios from 'axios'
 
 const NavbarMenu = () => {
 

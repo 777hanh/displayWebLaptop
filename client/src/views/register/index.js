@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { apiUrl } from '../../constants/apiUrl'
 import { LOGIN_USER } from '../../redux/action'
 import setAuthToken from '../../utils/setAccessToken'
-// import AlertMessage from '../Layout/AlertMessage';
+import AlertMessage from '../../components/layout/alertMessage';
 
 
 
@@ -43,17 +43,30 @@ const Register = () => {
         phone: '',
         password: '',
         confirmPassword: '',
+        fullName: '',
     })
 
     const [alert, setAlert] = useState(null)
 
-    const { phone, password, confirmPassword } = registerForm
+    const { phone, password, confirmPassword, fullName } = registerForm
 
     const onChangRegisterForm = event => setRegisterForm({
         ...registerForm,
         [event.target.name]: event.target.value
     })
-
+    const onChangePassword = event =>{
+        setRegisterForm({
+            ...registerForm,
+            password: event.target.value
+        })
+        if (event.target.value === confirmPassword) {
+            setAlert(null)
+        }
+        else {
+            setAlert({ type: 'danger', message: 'Password and Confirm Password is not equal' })
+            // console.log('Password and Confirm Password is not equal')
+        }
+    }
     const onChangeConfirmPass = event => {
         setRegisterForm({
             ...registerForm,
@@ -64,60 +77,59 @@ const Register = () => {
         }
         else {
             setAlert({ type: 'danger', message: 'Password and Confirm Password is not equal' })
-            console.log('Password and Confirm Password is not equal')
+            // console.log('Password and Confirm Password is not equal')
         }
     }
 
-    // //Register
-    // const registerEvent = async (e) => {
-    //     e.preventDefault()
-    //     try {
-    //         // console.log(loginForm)   
-    //         const response = await axios.post(`${apiUrl}/user/login`, loginForm)
-    //         // return console.log(response.data)
-    //         if (response.data.success) {
-    //             localStorage.setItem('e-laptop', response.data.accessToken)
-    //             setAuthToken(localStorage['e-laptop'])
-    //             try {
-    //                 const req = await axios.post(`${apiUrl}/user`)
-    //                 dispatch(LOGIN_USER({
-    //                     phone: req.data.user.phone
-    //                 }))
-    //                 // console.log(req.data)
-    //                 navigate(-1)
-    //             } catch (error) {
-    //                 console.log('Loi token')
-    //             }
-    //             // navigate('/dashboard')
-    //         }
-    //         else {
-    //             setAlert({ type: 'danger', message: response.data.message })
-    //             // console.log(response.data.message)
-    //         }
-    //     }
-    //     catch (err) {
-    //         console.log(err)
-    //     }
-    //     //     try {
-    //     //         const loginData = await loginUser(loginForm)
-    //     //         if (loginData.success) {
-    //     //             navigate('/dashboard')
-    //     //         }
-    //     //         else{
-    //     //             setAlert({type:'danger', message: loginData.message})
-    //     //         }
-    //     //     }
-    //     //     catch (err) {
-    //     //         console.log(err)
-    //     //     }
-    // }
+    //Register
+    const registerEvent = async (e) => {
+        e.preventDefault()
+        try {
+            // console.log(registerForm)   
+            const response = await axios.post(`${apiUrl}/user/register`, registerForm)
+            // return console.log(response.data)
+            if (response.data.success) {
+                localStorage.setItem('e-laptop', response.data.accessToken)
+                setAuthToken(localStorage['e-laptop'])
+                try {
+                    const req = await axios.post(`${apiUrl}/user`)
+                    dispatch(LOGIN_USER({
+                        phone: req.data.user.phone
+                    }))
+                    // console.log(req.data)
+                    navigate('/dashboard')
+                } catch (error) {
+                    console.log('Loi token')
+                }
+                // navigate('/dashboard')
+            }
+            else {
+                setAlert({ type: 'danger', message: response.data.message })
+                // console.log(response.data.message)
+            }
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
 
 
     let body = (
         <>
-            <Form className="mt-4" >
+            <Form className="mt-4" onSubmit={registerEvent}>
 
                 <div className="form-group">
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="fullName"
+                        placeholder="Enter your name"
+                        name="fullName"
+                        value={fullName}
+                        onChange={onChangRegisterForm}
+                    />
+                </div>
+                <div className="form-group mt-4">
                     <input
                         type="text"
                         className="form-control"
@@ -136,7 +148,7 @@ const Register = () => {
                         placeholder="Password"
                         name="password"
                         value={password}
-                        onChange={onChangRegisterForm}
+                        onChange={onChangePassword}
                     />
                 </div>
                 <div className="form-group mt-4">
@@ -150,7 +162,7 @@ const Register = () => {
                         onChange={onChangeConfirmPass}
                     />
                 </div>
-                {/* <AlertMessage info={alert}/> */}
+                
                 <button type="submit" className="btn btn-primary mt-4">Register</button>
             </Form>
             <p className="mt-4">You already have Account?
@@ -167,6 +179,7 @@ const Register = () => {
                     <div className="landing-inner">
                         <h1>E-Laptop</h1>
                         {body}
+                        <AlertMessage info={alert}/>
                     </div>
                 </div>
             </div>

@@ -18,7 +18,6 @@ const userReducer = (state = initValue, action) => {
                     isAuthenticated: false,
                     phone:''
                 }
-            
 
 
         default:

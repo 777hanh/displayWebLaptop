@@ -3,12 +3,12 @@ import Form from 'react-bootstrap/Form'
 import axios from 'axios';
 import { Link, useNavigate, } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { apiUrl } from '../../constants/apiUrl'
 import { LOGIN_USER } from '../../redux/action'
 import setAuthToken from '../../utils/setAccessToken'
-// import AlertMessage from '../Layout/AlertMessage';
+import AlertMessage from '../../components/layout/alertMessage';
 
 
 
@@ -85,18 +85,6 @@ const Login = () => {
         catch (err) {
             console.log(err)
         }
-        //     try {
-        //         const loginData = await loginUser(loginForm)
-        //         if (loginData.success) {
-        //             navigate('/dashboard')
-        //         }
-        //         else{
-        //             setAlert({type:'danger', message: loginData.message})
-        //         }
-        //     }
-        //     catch (err) {
-        //         console.log(err)
-        //     }
     }
 
 
@@ -126,7 +114,7 @@ const Login = () => {
                         onChange={onChangeLoginForm}
                     />
                 </div>
-                {/* <AlertMessage info={alert}/> */}
+                <AlertMessage info={alert}/>
                 <button type="submit" className="btn btn-primary mt-4">Login</button>
             </Form>
             <p className="mt-4">You don't have Account?
