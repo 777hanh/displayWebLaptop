@@ -11,3 +11,10 @@ export const LOGIN_USER = (data) =>{
         payload:data
     }
 }
+
+export const LOGOUT_USER = (data) =>{
+    return {
+        type: 'user/logoutUser', 
+        payload:data
+    }
+}

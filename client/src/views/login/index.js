@@ -1,9 +1,9 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux'
+import { Link, useNavigate, } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 
 import { apiUrl } from '../../constants/apiUrl'
 import { LOGIN_USER } from '../../redux/action'
@@ -11,10 +11,36 @@ import setAuthToken from '../../utils/setAccessToken'
 // import AlertMessage from '../Layout/AlertMessage';
 
 
+
 const Login = () => {
 
     let navigate = useNavigate()
     const dispatch = useDispatch()
+
+    //check logged
+    useEffect(() => {
+        const fetchData = async () => {
+            const isLoged = localStorage['e-laptop']
+            if (isLoged) {
+                setAuthToken(isLoged)
+                try {
+                    const req = await axios.post(`${apiUrl}/user`)
+                    // console.log(req.data)
+                    if (req.data.success) {
+                        return navigate('/dashboard')
+                    }
+                    else {
+                        return localStorage.removeItem('e-laptop')
+                    }
+                }
+                catch (err) {
+                    return localStorage.removeItem('e-laptop')
+                }
+            }
+        }
+        fetchData()
+    },[])
+
 
     const [loginForm, setLoginForm] = useState({
         phone: '',
@@ -42,15 +68,18 @@ const Login = () => {
                 try {
                     const req = await axios.post(`${apiUrl}/user`)
                     dispatch(LOGIN_USER({
-                        phone: req.data.phone
+                        phone: req.data.user.phone
                     }))
+                    // console.log(req.data)
+                    navigate(-1)
                 } catch (error) {
                     console.log('Loi token')
                 }
                 // navigate('/dashboard')
             }
-            else{
-                setAlert({type:'danger', message: response.message})
+            else {
+                setAlert({ type: 'danger', message: response.data.message })
+                // console.log(response.data.message)
             }
         }
         catch (err) {
@@ -69,6 +98,7 @@ const Login = () => {
         //         console.log(err)
         //     }
     }
+
 
     let body = (
         <>

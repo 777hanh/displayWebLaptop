@@ -1,9 +1,10 @@
 import Spinner from "react-bootstrap/Spinner"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import axios from "axios"
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import axios from "axios"
+// import { useNavigate } from 'react-router-dom';
 
 import { apiUrl } from '../../constants/apiUrl'
 import NavbarMenu from "../../components/layout/navMenu"
@@ -12,7 +13,8 @@ import { LOAD_PRODUCT } from './../../redux/action'
 
 const DashBoard = () => {
 
-
+    //useReactRouter
+    // const navigate = useNavigate()
     //dispatch
     const dispatch = useDispatch()
 

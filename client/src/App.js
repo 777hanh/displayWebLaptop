@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Dashboard from './views/dashboard/dashboard'
 import Login from './views/login'
+import Register from './views/register'
 import NavigatePage from './components/layout/landing'
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<NavigatePage />} />
       </Routes>
