@@ -11,13 +11,12 @@ const userReducer = (state = initValue, action) => {
                 isAuthenticated: true,
                 phone: action.payload.phone
             }
-            
-            case 'user/logoutUser':
-                return{
-                    ...state,
-                    isAuthenticated: false,
-                    phone:''
-                }
+
+        case 'user/logoutUser':
+            return {
+                isAuthenticated: false,
+                phone: ''
+            }
 
 
         default:

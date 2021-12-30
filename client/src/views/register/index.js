@@ -9,6 +9,7 @@ import { apiUrl } from '../../constants/apiUrl'
 import { LOGIN_USER } from '../../redux/action'
 import setAuthToken from '../../utils/setAccessToken'
 import AlertMessage from '../../components/layout/alertMessage';
+import checkLogged from '../../utils/checkLogged'
 
 
 
@@ -18,25 +19,36 @@ const Register = () => {
     const dispatch = useDispatch()
 
     //check logged
-    useEffect(async () => {
-        const isLoged = localStorage['e-laptop']
-        if (isLoged) {
-            setAuthToken(isLoged)
-            try {
-                const req = await axios.post(`${apiUrl}/user`)
-                // console.log(req.data)
-                if (req.data.success) {
-                    navigate('/dashboard')
-                }
-                else {
-                    localStorage.removeItem('e-laptop')
-                }
-            }
-            catch (err) {
-                localStorage.removeItem('e-laptop')
-            }
+    // useEffect(async () => {
+    //     const isLoged = localStorage['e-laptop']
+    //     if (isLoged) {
+    //         setAuthToken(isLoged)
+    //         try {
+    //             const req = await axios.post(`${apiUrl}/user`)
+    //             // console.log(req.data)
+    //             if (req.data.success) {
+    //                 navigate('/dashboard')
+    //             }
+    //             else {
+    //                 localStorage.removeItem('e-laptop')
+    //             }
+    //         }
+    //         catch (err) {
+    //             localStorage.removeItem('e-laptop')
+    //         }
+    //     }
+    // }, [])
+
+    checkLogged()
+    let check = useSelector(state => state.user.phone)
+    useEffect(() => {
+        if (check) {
+            navigate('/dashboard')
         }
-    }, [])
+        else {
+            console.log(check)
+        }
+    }, [check])
 
 
     const [registerForm, setRegisterForm] = useState({
@@ -54,7 +66,7 @@ const Register = () => {
         ...registerForm,
         [event.target.name]: event.target.value
     })
-    const onChangePassword = event =>{
+    const onChangePassword = event => {
         setRegisterForm({
             ...registerForm,
             password: event.target.value
@@ -162,7 +174,7 @@ const Register = () => {
                         onChange={onChangeConfirmPass}
                     />
                 </div>
-                
+
                 <button type="submit" className="btn btn-primary mt-4">Register</button>
             </Form>
             <p className="mt-4">You already have Account?
@@ -179,7 +191,7 @@ const Register = () => {
                     <div className="landing-inner">
                         <h1>E-Laptop</h1>
                         {body}
-                        <AlertMessage info={alert}/>
+                        <AlertMessage info={alert} />
                     </div>
                 </div>
             </div>

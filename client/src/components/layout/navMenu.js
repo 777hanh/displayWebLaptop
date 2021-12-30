@@ -4,18 +4,27 @@ import logoutIcon from './../../assets/logout.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { LOGOUT_USER } from './../../redux/action'
 import { useNavigate } from 'react-router-dom'
+
+import store from '../../redux/store'
 // import axios from 'axios'
 
 const NavbarMenu = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const logoutEnvent = () => {
+    
+    const logoutEvent = () => {
+        localStorage.removeItem('e-laptop')
         dispatch(LOGOUT_USER(
         ))
-        localStorage.removeItem('e-laptop')
+        // const a = store.getState().user
+        // console.log(a)
+        // useEffect(()=>{
+        //     console.log(a)
+        // })
         navigate('/login')
     }
+
     const user = useSelector(state => state.user.phone)
     // console.log(user)
 
@@ -44,15 +53,15 @@ const NavbarMenu = () => {
                                 <span className="visually-hidden">(current)</span>
                             </li>
                             <li className="nav-item">
-                                <Link to="/about" className="nav-link" >About</Link>
+                                <Link to="/cart" className="nav-link active"  >Cart</Link>
                                 <span className="visually-hidden">(current)</span>
                             </li>
 
                         </ul>
-                        <span className="navbar-brand nav-item" disabled>{user ?'Phone: ' + user : 'anonymus'}</span>
-                        <button className="btn btn-secondary my-2 my-sm-0 nav-item" onClick={logoutEnvent} >
-                            {user ? <img src={logoutIcon} alt="logout" width='24' height='16' /> : 'Đăng nhập' }
-                            
+                        <span className="navbar-brand nav-item" disabled>{user ? 'Phone: ' + user : 'anonymus'}</span>
+                        <button className="btn btn-secondary my-2 my-sm-0 nav-item" onClick={logoutEvent} >
+                            {user ? <img src={logoutIcon} alt="logout" width='24' height='16' /> : 'Đăng nhập'}
+
                         </button>
                     </div>
                 </div>

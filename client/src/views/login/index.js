@@ -3,14 +3,13 @@ import Form from 'react-bootstrap/Form'
 import axios from 'axios';
 import { Link, useNavigate, } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { apiUrl } from '../../constants/apiUrl'
 import { LOGIN_USER } from '../../redux/action'
 import setAuthToken from '../../utils/setAccessToken'
 import AlertMessage from '../../components/layout/alertMessage';
-
-
+import checkLogged from '../../utils/checkLogged'
 
 const Login = () => {
 
@@ -18,28 +17,12 @@ const Login = () => {
     const dispatch = useDispatch()
 
     //check logged
+    checkLogged()
+    const check = useSelector(state => state.user.phone)
     useEffect(() => {
-        const fetchData = async () => {
-            const isLoged = localStorage['e-laptop']
-            if (isLoged) {
-                setAuthToken(isLoged)
-                try {
-                    const req = await axios.post(`${apiUrl}/user`)
-                    // console.log(req.data)
-                    if (req.data.success) {
-                        return navigate('/dashboard')
-                    }
-                    else {
-                        return localStorage.removeItem('e-laptop')
-                    }
-                }
-                catch (err) {
-                    return localStorage.removeItem('e-laptop')
-                }
-            }
-        }
-        fetchData()
-    },[])
+        if (check)
+            navigate('/dashboard')
+    }, [check])
 
 
     const [loginForm, setLoginForm] = useState({
@@ -79,6 +62,7 @@ const Login = () => {
             }
             else {
                 setAlert({ type: 'danger', message: response.data.message })
+                // checkLogged()
                 // console.log(response.data.message)
             }
         }
@@ -114,7 +98,7 @@ const Login = () => {
                         onChange={onChangeLoginForm}
                     />
                 </div>
-                <AlertMessage info={alert}/>
+                <AlertMessage info={alert} />
                 <button type="submit" className="btn btn-primary mt-4">Login</button>
             </Form>
             <p className="mt-4">You don't have Account?
