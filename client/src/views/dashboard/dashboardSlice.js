@@ -20,6 +20,11 @@ const productReducer = (state = initValue, action) => {
                 ]
             }
 
+            case 'product/clearState':
+                return{
+                    products: []
+                }
+
         default:
             return {
                 ...state

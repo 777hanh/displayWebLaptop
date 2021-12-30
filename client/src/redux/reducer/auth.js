@@ -14,6 +14,7 @@ const userReducer = (state = initValue, action) => {
 
         case 'user/logoutUser':
             return {
+                ...state,
                 isAuthenticated: false,
                 phone: ''
             }

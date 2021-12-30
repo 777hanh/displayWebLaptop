@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import axios from "axios"
 import { useEffect } from 'react'
-import { LOGIN_USER, LOGOUT_USER } from './../redux/action'
+import { LOGIN_USER, LOGOUT_USER } from './../redux/action/authAction'
 import setAuthToken from "./setAccessToken"
 import { apiUrl } from './../constants/apiUrl'
 

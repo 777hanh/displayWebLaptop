@@ -67,3 +67,7 @@
 	color: #2a9fd6;
 	text-decoration: none
 }
+.nameWeb:hover{
+  cursor:pointer;
+  color: #2a9fd6
+}

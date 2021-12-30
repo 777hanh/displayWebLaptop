@@ -9,8 +9,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { apiUrl } from '../../constants/apiUrl'
 import NavbarMenu from "../../components/layout/navMenu"
 import SingleProduct from "../../components/product/singleProduct"
-import { LOAD_PRODUCT } from './../../redux/action'
-import CheckLogged from './../../utils/checkLogged'
+import { LOAD_PRODUCT } from './../../redux/action/productAction'
+// import CheckLogged from './../../utils/checkLogged'
 import store from './../../redux/store' 
 
 const DashBoard = () => {
@@ -23,7 +23,7 @@ const DashBoard = () => {
     const dispatch = useDispatch()
 
     //checkLogged
-    CheckLogged()
+    // CheckLogged()
     let check = store.getState().user.phone
     // let check = useSelector(state => state.user.phone)
     // useEffect(() => {

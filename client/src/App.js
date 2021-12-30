@@ -9,7 +9,11 @@ import Login from './views/login'
 import Register from './views/register'
 import NavigatePage from './components/layout/landing'
 
+import checkLogged from './utils/checkLogged'
+
 function App() {
+
+checkLogged()
 
   return (
     <div className="App">

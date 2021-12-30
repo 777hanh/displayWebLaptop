@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 
 import logoutIcon from './../../assets/logout.svg'
 import { useDispatch, useSelector } from 'react-redux'
-import { LOGOUT_USER } from './../../redux/action'
+import { LOGOUT_USER } from './../../redux/action/authAction'
+import { CLEAR_STATE_PRODUCT } from './../../redux/action/productAction'
 import { useNavigate } from 'react-router-dom'
 
 import store from '../../redux/store'
@@ -12,9 +13,13 @@ const NavbarMenu = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    
+
+    const abc = useSelector(state => state)
     const logoutEvent = () => {
+        localStorage.removeItem('state')
         localStorage.removeItem('e-laptop')
+        dispatch(CLEAR_STATE_PRODUCT())
+        console.log(abc)
         dispatch(LOGOUT_USER(
         ))
         // const a = store.getState().user

@@ -6,10 +6,10 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 
 import { apiUrl } from '../../constants/apiUrl'
-import { LOGIN_USER } from '../../redux/action'
+import { LOGIN_USER } from '../../redux/action/authAction'
 import setAuthToken from '../../utils/setAccessToken'
 import AlertMessage from '../../components/layout/alertMessage';
-import checkLogged from '../../utils/checkLogged'
+// import checkLogged from '../../utils/checkLogged'
 
 const Login = () => {
 
@@ -17,7 +17,7 @@ const Login = () => {
     const dispatch = useDispatch()
 
     //check logged
-    checkLogged()
+    // checkLogged()
     const check = useSelector(state => state.user.phone)
     useEffect(() => {
         if (check)
@@ -113,7 +113,7 @@ const Login = () => {
             <div className="landing">
                 <div className="dark-overlay">
                     <div className="landing-inner">
-                        <h1>E-Laptop</h1>
+                        <h1 className="nameWeb" onClick={()=> navigate('/dashboard')}>E-Laptop</h1>
                         {body}
                     </div>
                 </div>
