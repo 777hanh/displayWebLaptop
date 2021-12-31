@@ -4,9 +4,10 @@ import logoutIcon from './../../assets/logout.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { LOGOUT_USER } from './../../redux/action/authAction'
 import { CLEAR_STATE_PRODUCT } from './../../redux/action/productAction'
+import { CLEAR_STATE_CART } from '../../redux/action/cartAction'
 import { useNavigate } from 'react-router-dom'
 
-import store from '../../redux/store'
+// import store from '../../redux/store'
 // import axios from 'axios'
 
 const NavbarMenu = () => {
@@ -14,20 +15,23 @@ const NavbarMenu = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const abc = useSelector(state => state)
+    // const abc = useSelector(state => state)
     const logoutEvent = () => {
         localStorage.removeItem('state')
         localStorage.removeItem('e-laptop')
         dispatch(CLEAR_STATE_PRODUCT())
-        console.log(abc)
-        dispatch(LOGOUT_USER(
-        ))
+        dispatch(CLEAR_STATE_CART())
+        // console.log(abc)
+        dispatch(LOGOUT_USER())
         // const a = store.getState().user
         // console.log(a)
         // useEffect(()=>{
         //     console.log(a)
         // })
         navigate('/login')
+    }
+    const refreshEvent = () => {
+        navigate('/')
     }
 
     const user = useSelector(state => state.user.phone)
@@ -39,7 +43,7 @@ const NavbarMenu = () => {
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
                     {/* <img src={logo} alt='logo' width='32' height='32' /> */}
-                    <span className="navbar-brand ml-1">PrevLife</span>
+                    <span className="nameWeb navbar-brand ml-1" style={{color:'#0dcaf0'}} onClick={refreshEvent}>PrevLife</span>
                     <button
                         className="navbar-toggler"
                         type="button"

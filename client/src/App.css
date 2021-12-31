@@ -71,3 +71,14 @@
   cursor:pointer;
   color: #2a9fd6
 }
+span.nameWebClick{
+  color:aqua
+}
+
+.rm_icon{
+  font-size:20px
+}
+.rm_icon:hover{
+  cursor:pointer;
+  color: #f7232d
+}

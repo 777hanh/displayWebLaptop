@@ -7,7 +7,10 @@ import rootReducer from './reducer'
 const loadState = () => {
     try { // It's also possible to use other local storage if it doesn't support localStorage
         const serializedState = localStorage.getItem('state');
-        if (serializedState === null) {
+        const tokenAccess = localStorage.getItem('e-laptop')
+        if (tokenAccess === null)
+            return undefined;
+        else if (serializedState === null) {
             return undefined;
         } else {
             return JSON.parse(serializedState);

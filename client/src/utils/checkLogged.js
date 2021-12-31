@@ -8,8 +8,8 @@ import { apiUrl } from './../constants/apiUrl'
 function CheckLogged() {
     const dispatch = useDispatch()
     useEffect(async () => {
-        if (localStorage['e-laptop']) {
-            setAuthToken(localStorage['e-laptop'])
+        if (localStorage.getItem('e-laptop')) {
+            setAuthToken(localStorage.getItem('e-laptop'))
             try {
                 const response = await axios.post(`${apiUrl}/user`)
                 if (response.data.success) {
