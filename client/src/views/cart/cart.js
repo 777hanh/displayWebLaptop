@@ -1,17 +1,17 @@
 import Spinner from "react-bootstrap/Spinner"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
+// import Row from "react-bootstrap/Row"
+// import Col from "react-bootstrap/Col"
 import axios from "axios"
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 
 import { apiUrl } from '../../constants/apiUrl'
 import NavbarMenu from "../../components/layout/navMenu"
-import SingleProduct from "../../components/product/singleProduct"
-import { LOAD_PRODUCT_IN_CART } from '../../redux/action/cartAction'
+// import SingleProduct from "../../components/product/singleProduct"
+import { LOAD_PRODUCT_IN_CART, REMOVE_PRODUCT_CART } from '../../redux/action/cartAction'
 import CheckLogged from '../../utils/checkLogged'
-import store from '../../redux/store'
+// import store from '../../redux/store'
 
 const Cart = () => {
 
@@ -48,6 +48,26 @@ const Cart = () => {
         }
         catch (err) {
             body = (<div>không load được sản phẩm</div>)
+        }
+    }
+    const productSelected = {
+        productCart: ''
+    }
+    const handleClickRemoveProduct = async (productId, index) => {
+        // return console.log(productId)
+        productSelected.productCart = productId
+        // return console.log(index)
+        try {
+            const response = await axios.post(`${apiUrl}/cart/remove`, productSelected)
+            // console.log(response.data)
+            if (response.data.success) {
+                dispatch(REMOVE_PRODUCT_CART({ 
+                    product: index
+                }))
+            }
+            // getCart()
+        } catch (error) {
+            console.log(error.message)
         }
     }
 
@@ -120,7 +140,7 @@ const Cart = () => {
                                     <td>{product.productCart.priceProduct} vnđ</td>
                                     <td>x{product.countProductCart}</td>
                                     <td>{product.countProductCart * product.productCart.priceProduct} vnđ</td>
-                                    <td><span className="rm_icon">&times;</span></td>
+                                    <td><span className="rm_icon" onClick={ handleClickRemoveProduct.bind(this, product._id, index)}>&times;</span></td>
                                 </tr>
                             )
                         }

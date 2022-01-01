@@ -48,7 +48,7 @@ const DashBoard = () => {
 
     //get product from store of redux
     const products = useSelector(state => state.productList.products)
-    useEffect(() => { getProducts() }, [products]);
+    useEffect(() => { getProducts() }, []);
     // const products = []
     // console.log(products)
 

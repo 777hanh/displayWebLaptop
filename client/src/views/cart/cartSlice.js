@@ -10,7 +10,7 @@ const productsCart = (state = initValue, action) => {
                 productsCart:
                     action.payload.productsCart
             }
-            
+
         case 'cart/addProductCart':
             return {
                 ...state,
@@ -19,19 +19,25 @@ const productsCart = (state = initValue, action) => {
                     action.payload.product
                 ]
             }
-            case 'cart/removeProductCart':
-                return{
-                    ...state,
-                    productsCart: [
-                        
-                    ]
 
-                }
+        case 'cart/removeProductCart':
+            const newCart = [...state.productsCart]
+            newCart.splice(action.payload.product, 1)
+            return {
+                ...state,
+                productsCart: newCart
 
-            case 'cart/clearState':
-                return{
-                    productsCart: []
-                }
+            }
+
+        case 'cart/clearCart':
+            return {
+                productsCart: []
+            }
+
+        case 'cart/clearState':
+            return {
+                productsCart: []
+            }
 
         default:
             return {
